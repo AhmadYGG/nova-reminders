@@ -24,8 +24,8 @@ if [ -n "$DATABASE_URL" ]; then
   RETRY_COUNT=0
 
   while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    if bun run db:migrate deploy 2>/dev/null; then
-      echo "✅ Database migrations applied!"
+    if bun run db:push 2>/dev/null; then
+      echo "✅ Database schema synced!"
       break
     fi
 
