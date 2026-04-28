@@ -16,7 +16,7 @@ services:
       - CRON_SECRET=${CRON_SECRET}
       - REDIS_URL=redis://redis:6379
     ports:
-      - "3001:3000"
+      - "3005:3000"
     depends_on:
       mysql:
         condition: service_healthy
@@ -28,10 +28,10 @@ services:
     image: mysql:8.0
     container_name: nova-reminders-mysql
     environment:
-      - "MYSQL_ROOT_PASSWORD: nova-remindersroot"
-      - "MYSQL_DATABASE: nova_reminders"
-      - "MYSQL_USER: nova_user"
-      - "MYSQL_PASSWORD: nova-reminders321"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-nova-remindersroot}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-nova_reminders}
+      MYSQL_USER: ${MYSQL_USER:-nova_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-nova-reminders321}
     # Expose port for external access (development/migration only)
     ports:
       - "3312:3306"
