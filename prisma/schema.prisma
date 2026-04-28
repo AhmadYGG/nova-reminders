@@ -1,12 +1,12 @@
 // Nova Reminders - Database Schema
-// Prisma ORM with SQLite
+// Prisma ORM with MySQL
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
