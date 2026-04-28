@@ -7,7 +7,7 @@ services:
   app:
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=mysql://nova:${MYSQL_PASSWORD}@mysql:3306/nova_reminders
+      - DATABASE_URL=mysql://${MYSQL_USER:-nova_user}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE:-nova_reminders}
       - JWT_SECRET=${JWT_SECRET}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
@@ -27,8 +27,8 @@ services:
     container_name: nova-reminders-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: nova_reminders
-      MYSQL_USER: nova
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-nova_reminders}
+      MYSQL_USER: ${MYSQL_USER:-nova_user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     # Expose port for external access (development/migration only)
     ports:
@@ -52,4 +52,4 @@ services:
 
 volumes:
   nova-mysql:
-    driver: local
+    external: true
