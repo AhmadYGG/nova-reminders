@@ -9,8 +9,13 @@ services:
   app:
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=mysql://nova:${MYSQL_PASSWORD:-nova_secure_2024}@mysql:3306/nova_reminders
+      - DATABASE_URL=mysql://nova:${MYSQL_PASSWORD}@mysql:3306/nova_reminders
       - JWT_SECRET=${JWT_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+      - VAPID_SUBJECT=${VAPID_SUBJECT}
+      - CRON_SECRET=${CRON_SECRET}
       - REDIS_URL=redis://redis:6379
     depends_on:
       mysql:
@@ -23,12 +28,11 @@ services:
     image: mysql:8.0
     container_name: nova-reminders-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secure_2024}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: nova_reminders
       MYSQL_USER: nova
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-nova_secure_2024}
-    ports:
-      - "3306:3306"
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # No ports exposed - only accessible within docker network
     volumes:
       - nova-mysql:/var/lib/mysql
       - ./sql/migrations.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
