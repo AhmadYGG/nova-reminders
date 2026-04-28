@@ -26,10 +26,10 @@ services:
     image: mysql:8.0
     container_name: nova-reminders-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-nova_reminders}
-      MYSQL_USER: ${MYSQL_USER:-nova_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - "MYSQL_ROOT_PASSWORD: nova-remindersroot"
+      - "MYSQL_DATABASE: nova_reminders"
+      - "MYSQL_USER: nova_user"
+      - "MYSQL_PASSWORD: nova-reminders321"
     # Expose port for external access (development/migration only)
     ports:
       - "3312:3306"
