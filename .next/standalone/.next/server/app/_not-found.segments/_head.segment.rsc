@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/17xsa9m_74ca2.js","/_next/static/chunks/0dbhjjzl8qfwv.js"],"ViewportBoundary"]
-3:I[97367,["/_next/static/chunks/17xsa9m_74ca2.js","/_next/static/chunks/0dbhjjzl8qfwv.js"],"MetadataBoundary"]
-4:"$Sreact.suspense"
-5:I[27201,["/_next/static/chunks/17xsa9m_74ca2.js","/_next/static/chunks/0dbhjjzl8qfwv.js"],"IconMark"]
-0:{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Nova Reminders - AI-Powered Reminder App"}],["$","meta","1",{"name":"description","content":"A beautiful reminder app with Nova AI assistant. Stay organized with smart reminders and notifications."}],["$","meta","2",{"name":"author","content":"Nova Team"}],["$","meta","3",{"name":"keywords","content":"Nova,Reminders,AI,Task Manager,Productivity"}],["$","link","4",{"rel":"icon","href":"https://z-cdn.chatglm.cn/z-ai/static/logo.svg"}],["$","$L5","5",{}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"46YDFYmXwp9RelFvhf6P4"}
