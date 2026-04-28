@@ -28,12 +28,15 @@ export function NovaBubbles() {
 
   const [visibleBubbles, setVisibleBubbles] = useState<VisibleBubble[]>([]);
   const dismissedIdsRef = useRef<Set<string>>(new Set());
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isAuthenticatedRef = useRef(isAuthenticated);
+  isAuthenticatedRef.current = isAuthenticated;
 
-  // Poll for new notifications - single interval, no dependency churn
+  // Setup polling once on mount, cleanup on unmount
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     const checkNew = async () => {
+      if (!isAuthenticatedRef.current) return;
+
       const newNotifs = await fetchPendingRef.current();
       if (!newNotifs || newNotifs.length === 0) return;
 
@@ -53,10 +56,24 @@ export function NovaBubbles() {
       });
     };
 
-    checkNew();
-    const interval = setInterval(checkNew, POLL_INTERVAL_MS);
-    return () => clearInterval(interval);
-  }, [isAuthenticated]); // only re-run if auth changes
+    // Initial check after auth is confirmed
+    const initTimer = setTimeout(() => {
+      if (isAuthenticatedRef.current) {
+        checkNew();
+      }
+    }, 1000);
+
+    // Setup interval
+    intervalRef.current = setInterval(checkNew, POLL_INTERVAL_MS);
+
+    return () => {
+      clearTimeout(initTimer);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []); // Run only once on mount
 
   // Auto-dismiss timer
   useEffect(() => {

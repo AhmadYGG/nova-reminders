@@ -1,6 +1,12 @@
 {
+  "/api/auth/login/route": "app/api/auth/login/route.js",
   "/api/auth/me/route": "app/api/auth/me/route.js",
   "/api/categories/route": "app/api/categories/route.js",
   "/api/notifications/[id]/route": "app/api/notifications/[id]/route.js",
   "/api/notifications/pending/route": "app/api/notifications/pending/route.js",
+  "/api/notifications/read-all/route": "app/api/notifications/read-all/route.js",
   "/api/notifications/route": "app/api/notifications/route.js",
+  "/api/tasks/bulk/route": "app/api/tasks/bulk/route.js",
+  "/api/tasks/route": "app/api/tasks/route.js",
+  "/page": "app/page.js"
+}

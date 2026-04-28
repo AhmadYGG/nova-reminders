@@ -5814,10 +5814,13 @@ function NovaBubbles() {
     fetchPendingRef.current = fetchPending;
     const [visibleBubbles, setVisibleBubbles] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const dismissedIdsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(new Set());
-    // Poll for new notifications - single interval, no dependency churn
+    const intervalRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const isAuthenticatedRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(isAuthenticated);
+    isAuthenticatedRef.current = isAuthenticated;
+    // Setup polling once on mount, cleanup on unmount
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (!isAuthenticated) return;
         const checkNew = async ()=>{
+            if (!isAuthenticatedRef.current) return;
             const newNotifs = await fetchPendingRef.current();
             if (!newNotifs || newNotifs.length === 0) return;
             setVisibleBubbles((prev)=>{
@@ -5835,12 +5838,22 @@ function NovaBubbles() {
                 ].slice(-MAX_BUBBLES);
             });
         };
-        checkNew();
-        const interval = setInterval(checkNew, POLL_INTERVAL_MS);
-        return ()=>clearInterval(interval);
-    }, [
-        isAuthenticated
-    ]); // only re-run if auth changes
+        // Initial check after auth is confirmed
+        const initTimer = setTimeout(()=>{
+            if (isAuthenticatedRef.current) {
+                checkNew();
+            }
+        }, 1000);
+        // Setup interval
+        intervalRef.current = setInterval(checkNew, POLL_INTERVAL_MS);
+        return ()=>{
+            clearTimeout(initTimer);
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+        };
+    }, []); // Run only once on mount
     // Auto-dismiss timer
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (visibleBubbles.length === 0) return;
@@ -5904,7 +5917,7 @@ function NovaBubbles() {
                                     size: "sm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                    lineNumber: 112,
+                                    lineNumber: 129,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5922,7 +5935,7 @@ function NovaBubbles() {
                                                     children: "Nova"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                                    lineNumber: 115,
+                                                    lineNumber: 132,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5938,7 +5951,7 @@ function NovaBubbles() {
                                                             })
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                                            lineNumber: 122,
+                                                            lineNumber: 139,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5948,24 +5961,24 @@ function NovaBubbles() {
                                                                 className: "w-3.5 h-3.5"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                                                lineNumber: 134,
+                                                                lineNumber: 151,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                                            lineNumber: 130,
+                                                            lineNumber: 147,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                                    lineNumber: 121,
+                                                    lineNumber: 138,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 131,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5973,19 +5986,19 @@ function NovaBubbles() {
                                             children: bubble.notification.message
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                            lineNumber: 140,
+                                            lineNumber: 157,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                    lineNumber: 113,
+                                    lineNumber: 130,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                            lineNumber: 111,
+                            lineNumber: 128,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6000,28 +6013,28 @@ function NovaBubbles() {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                                lineNumber: 148,
+                                lineNumber: 165,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                            lineNumber: 147,
+                            lineNumber: 164,
                             columnNumber: 13
                         }, this)
                     ]
                 }, bubble.id, true, {
                     fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-                    lineNumber: 98,
+                    lineNumber: 115,
                     columnNumber: 11
                 }, this))
         }, void 0, false, {
             fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-            lineNumber: 96,
+            lineNumber: 113,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/notifications/NovaBubbles.tsx",
-        lineNumber: 95,
+        lineNumber: 112,
         columnNumber: 5
     }, this);
 }
