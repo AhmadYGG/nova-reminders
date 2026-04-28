@@ -1,0 +1,724 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   NOVA REMINDERS - Deep Space Theme
+   ======================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'DM Sans', var(--font-dm-sans), sans-serif;
+  --font-heading: 'Syne', var(--font-syne), sans-serif;
+  --font-mono: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-nova-purple: #7C5CFC;
+  --color-nova-cyan: #00D4FF;
+  --color-nova-success: #22D3A0;
+  --color-nova-warning: #F59E0B;
+  --color-nova-danger: #EF4444;
+  --color-nova-surface: #0E1120;
+  --color-nova-deep: #07080F;
+  --color-nova-text: #F0F2FF;
+  --color-nova-muted: #5A6080;
+  --color-nova-border: rgba(255, 255, 255, 0.06);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Deep Space Palette */
+  --background: #07080F;
+  --foreground: #F0F2FF;
+
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #F0F2FF;
+
+  --popover: #0E1120;
+  --popover-foreground: #F0F2FF;
+
+  --primary: #7C5CFC;
+  --primary-foreground: #F0F2FF;
+
+  --secondary: #0E1120;
+  --secondary-foreground: #F0F2FF;
+
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #5A6080;
+
+  --accent: rgba(0, 212, 255, 0.1);
+  --accent-foreground: #00D4FF;
+
+  --destructive: #EF4444;
+
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #7C5CFC;
+
+  --chart-1: #7C5CFC;
+  --chart-2: #00D4FF;
+  --chart-3: #22D3A0;
+  --chart-4: #F59E0B;
+  --chart-5: #EF4444;
+
+  --sidebar: #0E1120;
+  --sidebar-foreground: #F0F2FF;
+  --sidebar-primary: #7C5CFC;
+  --sidebar-primary-foreground: #F0F2FF;
+  --sidebar-accent: rgba(124, 92, 252, 0.12);
+  --sidebar-accent-foreground: #F0F2FF;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #7C5CFC;
+}
+
+.dark {
+  --background: #07080F;
+  --foreground: #F0F2FF;
+
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #F0F2FF;
+
+  --popover: #0E1120;
+  --popover-foreground: #F0F2FF;
+
+  --primary: #7C5CFC;
+  --primary-foreground: #F0F2FF;
+
+  --secondary: #0E1120;
+  --secondary-foreground: #F0F2FF;
+
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #5A6080;
+
+  --accent: rgba(0, 212, 255, 0.1);
+  --accent-foreground: #00D4FF;
+
+  --destructive: #EF4444;
+
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #7C5CFC;
+
+  --chart-1: #7C5CFC;
+  --chart-2: #00D4FF;
+  --chart-3: #22D3A0;
+  --chart-4: #F59E0B;
+  --chart-5: #EF4444;
+
+  --sidebar: #0E1120;
+  --sidebar-foreground: #F0F2FF;
+  --sidebar-primary: #7C5CFC;
+  --sidebar-primary-foreground: #F0F2FF;
+  --sidebar-accent: rgba(124, 92, 252, 0.12);
+  --sidebar-accent-foreground: #F0F2FF;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #7C5CFC;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'DM Sans', var(--font-dm-sans), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', var(--font-syne), sans-serif;
+    font-weight: 700;
+    color: #F0F2FF;
+  }
+
+  code, .font-mono {
+    font-family: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
+  }
+}
+
+/* ========================================
+   Custom Scrollbar
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 92, 252, 0.3);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 92, 252, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 92, 252, 0.3) rgba(255, 255, 255, 0.02);
+}
+
+/* ========================================
+   Glassmorphism Card
+   ======================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+.glass-card-hover {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(124, 92, 252, 0.2);
+  box-shadow: 0 0 30px rgba(124, 92, 252, 0.08);
+}
+
+/* ========================================
+   Nova Glow Effects
+   ======================================== */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(124, 92, 252, 0.3),
+                0 0 40px rgba(124, 92, 252, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(124, 92, 252, 0.5),
+                0 0 60px rgba(124, 92, 252, 0.2),
+                0 0 80px rgba(0, 212, 255, 0.1);
+  }
+}
+
+.nova-avatar-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes subtle-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(124, 92, 252, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(124, 92, 252, 0.3);
+  }
+}
+
+.nova-btn-glow {
+  position: relative;
+}
+
+.nova-btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(124, 92, 252, 0.2), rgba(0, 212, 255, 0.2));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.nova-btn-glow:hover::after {
+  opacity: 1;
+}
+
+/* ========================================
+   Strikethrough Animation for Completed Tasks
+   ======================================== */
+
+@keyframes strike-through {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.task-completed .task-title {
+  position: relative;
+  color: #5A6080;
+}
+
+.task-completed .task-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, #7C5CFC, #00D4FF);
+  animation: strike-through 0.4s ease-out forwards;
+}
+
+/* ========================================
+   Chat Bubble Slide-in Animation
+   ======================================== */
+
+@keyframes bubble-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes bubble-slide-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(40px) scale(0.9);
+  }
+}
+
+.nova-bubble-enter {
+  animation: bubble-slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.nova-bubble-exit {
+  animation: bubble-slide-out 0.3s ease-in forwards;
+}
+
+/* ========================================
+   Custom Checkbox Animation
+   ======================================== */
+
+@keyframes checkbox-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nova-checkbox-checked {
+  animation: checkbox-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   Staggered Card Reveal Animation
+   ======================================== */
+
+@keyframes card-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-stagger {
+  opacity: 0;
+  animation: card-reveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ========================================
+   Particle/Star Twinkling Background
+   ======================================== */
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #F0F2FF;
+  border-radius: 50%;
+  animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+}
+
+.star-large {
+  width: 3px;
+  height: 3px;
+  background: rgba(124, 92, 252, 0.6);
+  box-shadow: 0 0 6px rgba(124, 92, 252, 0.4);
+}
+
+/* ========================================
+   Gradient Text Utilities
+   ======================================== */
+
+.text-gradient-purple-cyan {
+  background: linear-gradient(135deg, #7C5CFC, #00D4FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #7C5CFC, #9B7FFC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   Priority Color Utilities
+   ======================================== */
+
+.priority-urgent {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.priority-high {
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.priority-medium {
+  color: #7C5CFC;
+  background: rgba(124, 92, 252, 0.1);
+  border-color: rgba(124, 92, 252, 0.2);
+}
+
+.priority-low {
+  color: #22D3A0;
+  background: rgba(34, 211, 160, 0.1);
+  border-color: rgba(34, 211, 160, 0.2);
+}
+
+/* ========================================
+   Sidebar Active Indicator
+   ======================================== */
+
+.sidebar-item-active {
+  position: relative;
+  background: rgba(124, 92, 252, 0.12);
+  color: #F0F2FF;
+}
+
+.sidebar-item-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: linear-gradient(180deg, #7C5CFC, #00D4FF);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 12px rgba(124, 92, 252, 0.4);
+}
+
+/* ========================================
+   Focus Ring Styles
+   ======================================== */
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #07080F, 0 0 0 4px rgba(124, 92, 252, 0.5);
+}
+
+/* ========================================
+   Animated Underline for Links
+   ======================================== */
+
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #7C5CFC, #00D4FF);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   Selection Styling
+   ======================================== */
+
+::selection {
+  background: rgba(124, 92, 252, 0.3);
+  color: #F0F2FF;
+}
+
+::-moz-selection {
+  background: rgba(124, 92, 252, 0.3);
+  color: #F0F2FF;
+}
+
+/* ========================================
+   Legacy class aliases (for previous agent components)
+   ======================================== */
+
+.nova-glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nova-gradient-text {
+  background: linear-gradient(135deg, #7C5CFC, #00D4FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nova-glow {
+  box-shadow: 0 0 15px rgba(124, 92, 252, 0.3);
+}
+
+.nova-glow-lg {
+  box-shadow: 0 0 30px rgba(124, 92, 252, 0.4), 0 0 60px rgba(124, 92, 252, 0.1);
+}
+
+.nova-hover-glow {
+  transition: all 0.3s ease;
+}
+
+.nova-hover-glow:hover {
+  border-color: rgba(124, 92, 252, 0.3);
+  box-shadow: 0 0 20px rgba(124, 92, 252, 0.15);
+}
+
+.nova-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nova-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nova-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(124, 92, 252, 0.3);
+  border-radius: 3px;
+}
+
+.nova-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 92, 252, 0.5);
+}
+
+.nova-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nova-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(124, 92, 252, 0.3);
+  animation: float-particle linear infinite;
+}
+
+.priority-low { background-color: #22D3A0; }
+.priority-medium { background-color: #00D4FF; }
+.priority-high { background-color: #F59E0B; }
+.priority-urgent { background-color: #EF4444; }
+
+/* Orb animation for NovaOrb component */
+@keyframes orb-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes highlight-shimmer {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(2px);
+  }
+}
+
+@keyframes subtle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes progress-shrink {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+@keyframes checkbox-fill {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes checkbox-check {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes strikethrough {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes bubble-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  60% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bubble-exit {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,51 @@
+# ============================================
+# Nova Reminders - Docker Compose Production
+# Override for production with MySQL
+# ============================================
+
+version: "3.8"
+
+services:
+  app:
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mysql://nova:${MYSQL_PASSWORD:-nova_secure_2024}@mysql:3306/nova_reminders
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # MySQL Database (Production)
+  mysql:
+    image: mysql:8.0
+    container_name: nova-reminders-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secure_2024}
+      MYSQL_DATABASE: nova_reminders
+      MYSQL_USER: nova
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-nova_secure_2024}
+    ports:
+      - "3306:3306"
+    volumes:
+      - nova-mysql:/var/lib/mysql
+      - ./sql/migrations.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    networks:
+      - nova-network
+
+volumes:
+  nova-mysql:
+    driver: local

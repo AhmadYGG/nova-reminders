@@ -1,0 +1,72 @@
+# ============================================
+# Nova Reminders - Docker Compose
+# Development & Production configuration
+# ============================================
+
+version: "3.8"
+
+services:
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nova-reminders-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:./db/nova.db
+      - JWT_SECRET=${JWT_SECRET:-nova-reminders-secret-key-2024}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-nova-nextauth-secret}
+    volumes:
+      - nova-db:/app/db
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - nova-network
+
+  # Redis for session/queue/rate-limiting
+  redis:
+    image: redis:7-alpine
+    container_name: nova-reminders-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - nova-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - nova-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nova-reminders-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - nova-network
+
+volumes:
+  nova-db:
+    driver: local
+  nova-redis:
+    driver: local
+
+networks:
+  nova-network:
+    driver: bridge
