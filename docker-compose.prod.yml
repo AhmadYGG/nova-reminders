@@ -3,8 +3,6 @@
 # Override for production with MySQL
 # ============================================
 
-version: "3.8"
-
 services:
   app:
     environment:
@@ -32,7 +30,9 @@ services:
       MYSQL_DATABASE: nova_reminders
       MYSQL_USER: nova
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    # No ports exposed - only accessible within docker network
+    # Expose port for external access (development/migration only)
+    ports:
+      - "3312:3306"
     volumes:
       - nova-mysql:/var/lib/mysql
       - ./sql/migrations.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
