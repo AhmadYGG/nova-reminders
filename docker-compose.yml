@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile
     container_name: nova-reminders-app
     ports:
-      - "127.0.0.1:3000:3000"  # Only expose to localhost
+      - "127.0.0.1:3001:3000"  # Only expose to localhost
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:./db/nova.db
