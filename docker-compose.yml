@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile
     container_name: nova-reminders-app
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"  # Only expose to localhost
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:./db/nova.db
@@ -49,21 +49,22 @@ services:
     networks:
       - nova-network
 
-  # Nginx Reverse Proxy
-  nginx:
-    image: nginx:alpine
-    container_name: nova-reminders-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    depends_on:
-      - app
-    restart: unless-stopped
-    networks:
-      - nova-network
+  # Nginx Reverse Proxy (disabled - using host nginx instead)
+  # Uncomment if you want to run nginx in container
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nova-reminders-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - app
+  #   restart: unless-stopped
+  #   networks:
+  #     - nova-network
 
 volumes:
   nova-db:
