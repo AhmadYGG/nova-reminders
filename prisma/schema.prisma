@@ -25,6 +25,8 @@ model User {
   notifications Notification[]
   sessions      Session[]
   pushSubscriptions PushSubscription[]
+
+  @@map("users")
 }
 
 model Task {
@@ -53,6 +55,7 @@ model Task {
   @@index([reminderTime])
   @@index([status])
   @@index([deletedAt])
+  @@map("tasks")
 }
 
 model Category {
@@ -68,6 +71,7 @@ model Category {
   tasks Task[]
 
   @@index([userId])
+  @@map("categories")
 }
 
 model Notification {
@@ -85,6 +89,7 @@ model Notification {
   @@index([userId])
   @@index([isRead])
   @@index([sentAt])
+  @@map("notifications")
 }
 
 model Session {
@@ -99,6 +104,7 @@ model Session {
   @@index([token])
   @@index([userId])
   @@index([expiresAt])
+  @@map("sessions")
 }
 
 model PushSubscription {
