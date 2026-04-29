@@ -34,6 +34,9 @@ COPY . .
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Re-generate Prisma client with the latest schema
+RUN bun run db:generate
+
 # Build the application
 RUN bun run build
 
