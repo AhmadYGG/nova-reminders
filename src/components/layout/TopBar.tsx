@@ -34,10 +34,12 @@ import { useAppStore } from '@/stores/app-store';
 import { useAuthStore } from '@/stores/auth-store';
 import { useNotificationStore } from '@/stores/notification-store';
 import { useTaskStore } from '@/stores/task-store';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { formatDistanceToNow } from 'date-fns';
 
 export function TopBar() {
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
+  const setActiveView = useAppStore((s) => s.setActiveView);
   const { user, logout } = useAuthStore();
   const {
     notifications,
@@ -51,6 +53,7 @@ export function TopBar() {
   const openCreateModal = useTaskStore((s) => s.openCreateModal);
   const setFilters = useTaskStore((s) => s.setFilters);
   const fetchTasks = useTaskStore((s) => s.fetchTasks);
+  const isMobile = useIsMobile();
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -111,6 +114,25 @@ export function TopBar() {
 
       <div className="flex items-center gap-2">
         {/* Notification bell */}
+        {isMobile ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative text-[#5A6080] hover:text-[#F0F2FF] hover:bg-[rgba(255,255,255,0.04)]"
+            onClick={() => setActiveView('notifications')}
+          >
+            <Bell className="h-5 w-5" />
+            {unreadCount > 0 && (
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#7C5CFC] text-white text-[10px] font-bold"
+              >
+                {unreadCount > 99 ? '99+' : unreadCount}
+              </motion.span>
+            )}
+          </Button>
+        ) : (
         <Popover open={showPanel} onOpenChange={(open) => { if (!open) closePanel(); else togglePanel(); }}>
           <PopoverTrigger asChild>
             <Button
@@ -183,6 +205,7 @@ export function TopBar() {
             </ScrollArea>
           </PopoverContent>
         </Popover>
+        )}
 
         {/* User avatar dropdown */}
         <DropdownMenu>

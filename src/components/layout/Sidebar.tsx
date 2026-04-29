@@ -54,6 +54,7 @@ export function Sidebar() {
 
   const handleNavClick = (id: NavItem['id']) => {
     setActiveView(id);
+    setSidebarOpen(false); // close sidebar on mobile after nav
   };
 
   const handleLogout = async () => {
