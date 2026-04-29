@@ -3,8 +3,6 @@
 # Development & Production configuration
 # ============================================
 
-version: "3.8"
-
 services:
   # Next.js Application
   app:
