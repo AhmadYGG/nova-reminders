@@ -121,4 +121,5 @@ model PushSubscription {
 
   @@index([userId])
   @@index([endpoint])
+  @@map("push_subscriptions")
 }
