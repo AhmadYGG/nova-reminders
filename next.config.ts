@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  instrumentationHook: true,
   allowedDevOrigins: [
     ".space.z.ai",
     ".z.ai",
