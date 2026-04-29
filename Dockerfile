@@ -4,12 +4,9 @@
 # ============================================
 
 # Stage 1: Dependencies
-FROM node:20-alpine AS deps
+FROM oven/bun:1-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-# Install bun
-RUN npm install -g bun
 
 # Copy package files
 COPY package.json bun.lock* ./
@@ -22,10 +19,8 @@ RUN bun install
 RUN bun run db:generate
 
 # Stage 2: Build
-FROM node:20-alpine AS builder
+FROM oven/bun:1-alpine AS builder
 WORKDIR /app
-
-RUN npm install -g bun
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -49,9 +44,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-
-# Install bun for running migrations
-RUN npm install -g bun
 
 # Copy built assets
 COPY --from=builder /app/public ./public
