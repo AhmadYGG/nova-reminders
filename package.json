@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
+    "dev:https": "node server-https.js",
     "build": "next build",
     "start": "bun .next/standalone/server.js",
     "lint": "eslint .",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "setup:https": "bash setup-https.sh"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

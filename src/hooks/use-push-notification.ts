@@ -34,24 +34,77 @@ export function usePushNotification() {
     setError(null);
 
     try {
+      console.log('🔔 Requesting notification permission...');
       const result = await Notification.requestPermission();
+      console.log('📋 Permission result:', result);
       setPermission(result);
 
       if (result === 'granted') {
-        await subscribeToPush();
+        console.log('✅ Permission granted, subscribing to push...');
+        // Subscribe immediately after permission granted
+        await subscribeDirectly();
       } else if (result === 'denied') {
+        console.error('❌ Notification permission denied');
         setError('Notification permission denied');
       }
 
       return result;
     } catch (err: any) {
-      console.error('Permission request error:', err);
+      console.error('❌ Permission request error:', err);
       setError(err.message);
       throw err;
     } finally {
       setIsLoading(false);
     }
   }, [isSupported]);
+
+  // Direct subscribe function that doesn't depend on permission state
+  const subscribeDirectly = async () => {
+    try {
+      console.log('📡 Getting service worker registration...');
+      const registration = await navigator.serviceWorker.ready;
+      console.log('✅ Service worker ready');
+
+      console.log('🔑 Fetching VAPID public key...');
+      const response = await fetch('/api/push/vapid-public-key');
+      if (!response.ok) {
+        throw new Error('Failed to get VAPID public key');
+      }
+      const { publicKey } = await response.json();
+      console.log('✅ Got VAPID key:', publicKey.substring(0, 20) + '...');
+
+      console.log('📱 Subscribing to push manager...');
+      const sub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicKey),
+      });
+      console.log('✅ Push manager subscription created');
+
+      console.log('💾 Sending subscription to server...');
+      const subscribeResponse = await fetch('/api/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(sub.toJSON()),
+      });
+
+      if (!subscribeResponse.ok) {
+        const errorData = await subscribeResponse.json();
+        console.error('❌ Server error:', errorData);
+        throw new Error(errorData.error || 'Failed to save subscription');
+      }
+
+      const result = await subscribeResponse.json();
+      console.log('✅ Subscription saved to server! ID:', result.subscriptionId);
+
+      setSubscription(sub);
+      console.log('✅ Push subscription successful');
+      return sub;
+    } catch (err: any) {
+      console.error('❌ Subscribe error:', err);
+      throw err;
+    }
+  };
 
   const subscribeToPush = useCallback(async () => {
     if (!isSupported || permission !== 'granted') {
