@@ -1,5 +1,6 @@
 import { db } from './db';
 import { sendPushToUser } from './push';
+import { sendReminderEmail } from './email';
 import {
   generateReminderMessage,
   generateDeadlineMessage,
@@ -48,7 +49,7 @@ async function checkReminders() {
       }
 
       // Send push notification
-      await sendPushToUser(task.userId, {
+      const pushResult = await sendPushToUser(task.userId, {
         title,
         body: message,
         icon: '/logo.svg',
@@ -61,6 +62,18 @@ async function checkReminders() {
         ],
         vibrate: [200, 100, 200],
       });
+
+      // Send email as backup if push failed or no subscription
+      if (pushResult.sent === 0) {
+        await sendReminderEmail(
+          task.user.email,
+          task.title,
+          task.description,
+          new Date(task.reminderTime),
+          task.dueDate ? new Date(task.dueDate) : null
+        );
+        console.log('📧 Email sent as fallback for task:', task.title);
+      }
 
       // Save notification record
       await db.notification.create({

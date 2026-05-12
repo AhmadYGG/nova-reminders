@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "dev:https": "node server-https.js",
+    "dev:https": "node scripts/server-https.js",
     "build": "next build",
     "start": "bun .next/standalone/server.js",
     "lint": "eslint .",
@@ -12,7 +12,9 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
-    "setup:https": "bash setup-https.sh"
+    "setup:https": "bash scripts/setup-https.sh",
+    "test:push": "node scripts/test-push-notification.js",
+    "test:task": "node scripts/create-test-task.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -51,6 +53,7 @@
     "@reactuses/core": "^6.3.1",
     "@tanstack/react-query": "^5.100.6",
     "@tanstack/react-table": "^8.21.3",
+    "@types/nodemailer": "^8.0.0",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -66,6 +69,7 @@
     "next-auth": "^4.24.14",
     "next-intl": "^4.11.0",
     "next-themes": "^0.4.6",
+    "nodemailer": "^7.0.13",
     "prisma": "^6.19.3",
     "react": "^19.2.5",
     "react-day-picker": "^9.14.0",

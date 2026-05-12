@@ -1,0 +1,282 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-04-30T08:30:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_nova",
+      "_type": "workspace",
+      "name": "Nova Reminders API",
+      "description": "Complete API collection - Cookies auto-managed",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "cron_secret": "j85VhNDmL18SOUct4wgc/1IUdtYuPZyeKmvZCCiStm0="
+      },
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "jar_cookies",
+      "_type": "cookie_jar",
+      "name": "Default Jar",
+      "cookies": [],
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "name": "🔐 Auth",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_register",
+      "_type": "request",
+      "name": "Register",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/register",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_auth",
+      "settingStoreCookies": true,
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "name": "Login",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_auth",
+      "settingStoreCookies": true,
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "name": "Get Me",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/auth/me",
+      "parentId": "fld_auth",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_logout",
+      "_type": "request",
+      "name": "Logout",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/logout",
+      "parentId": "fld_auth",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_tasks",
+      "_type": "request_group",
+      "name": "📋 Tasks",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_tasks_list",
+      "_type": "request",
+      "name": "List Tasks",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/tasks",
+      "parentId": "fld_tasks",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_tasks_create",
+      "_type": "request",
+      "name": "Create Task",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/tasks",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Buy groceries\",\n  \"description\": \"Milk, eggs, bread\",\n  \"dueDate\": \"2026-05-01T10:00:00Z\",\n  \"reminderTime\": \"2026-05-01T09:30:00Z\",\n  \"priority\": \"high\",\n  \"isNotificationEnabled\": true\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_tasks",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_tasks_create_2min",
+      "_type": "request",
+      "name": "Create Task (Reminder 2min)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/tasks",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Test Reminder - 2 Minutes\",\n  \"description\": \"Will remind in 2 minutes\",\n  \"reminderTime\": \"{% now 'iso-8601', 120 %}\",\n  \"priority\": \"high\",\n  \"isNotificationEnabled\": true\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_tasks",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_tasks_update",
+      "_type": "request",
+      "name": "Update Task",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/tasks/TASK_ID_HERE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Updated title\",\n  \"status\": \"done\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_tasks",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_tasks_delete",
+      "_type": "request",
+      "name": "Delete Task",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/tasks/TASK_ID_HERE",
+      "parentId": "fld_tasks",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_categories",
+      "_type": "request_group",
+      "name": "🏷️ Categories",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_categories_list",
+      "_type": "request",
+      "name": "List Categories",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/categories",
+      "parentId": "fld_categories",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_categories_create",
+      "_type": "request",
+      "name": "Create Category",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/categories",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Work\",\n  \"color\": \"#7c5cfc\",\n  \"icon\": \"💼\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_categories",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_notifications",
+      "_type": "request_group",
+      "name": "🔔 Notifications",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_notif_list",
+      "_type": "request",
+      "name": "List Notifications",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/notifications",
+      "parentId": "fld_notifications",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_notif_pending",
+      "_type": "request",
+      "name": "Get Pending",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/notifications/pending",
+      "parentId": "fld_notifications",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "req_notif_read_all",
+      "_type": "request",
+      "name": "Mark All Read",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/notifications/read-all",
+      "parentId": "fld_notifications",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_push",
+      "_type": "request_group",
+      "name": "📱 Push",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_push_vapid",
+      "_type": "request",
+      "name": "Get VAPID Key",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/push/vapid-public-key",
+      "parentId": "fld_push"
+    },
+    {
+      "_id": "req_push_test",
+      "_type": "request",
+      "name": "Test Push",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/push/test",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"message\": \"Test push!\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_push",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_email",
+      "_type": "request_group",
+      "name": "📧 Email",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_email_test",
+      "_type": "request",
+      "name": "Test Email",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/email/test",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"your-email@gmail.com\"\n}"
+      },
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "parentId": "fld_email",
+      "settingSendCookies": true
+    },
+    {
+      "_id": "fld_cron",
+      "_type": "request_group",
+      "name": "⏰ Cron",
+      "parentId": "wrk_nova"
+    },
+    {
+      "_id": "req_cron_check",
+      "_type": "request",
+      "name": "Check Reminders (Manual)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/cron/check-reminders",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.cron_secret }}"
+        }
+      ],
+      "parentId": "fld_cron"
+    }
+  ]
+}
